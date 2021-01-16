@@ -4,7 +4,7 @@ In its core is a simple library that creates a system of **Levels** that each of
 ### Problem
 Lets say you want to create SFML.NET game or simulation that requires game-loop and that contains a set of objects that need to know about each other (for example enemies that need to detect the player.)
 This library lets you create one object that handles all the timings, window, viewports, views and everything with simple adjustable settings.
-###How to
+### How to
 ***(Of course first you need to link SFML to your project.)***
 
 To start working with **SFBF** (Name of the namespace, short for **SF**ML-**B**asic-**F**ramework), you just need to create an object of `SFBF.Engine` and call `Run()` method on its object. That will create the window, program loop, and run everything. This function is **blocking** since it runs the loop of the program.
