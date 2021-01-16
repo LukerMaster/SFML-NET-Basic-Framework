@@ -176,11 +176,11 @@ protected override void Draw(RenderWindow w, AssetManager assetMgr)
 Used to determine maximum rate at which Update() and Draw() methods are called. Can be set to 0 to remove the cap.
 Setting negative value will ignore minus.
 
-- FixedUpdateRate
+- FixedUpdateRate:
 Used to determine rate at which FixedUpdate() method is called.
 If computer can't keep up with FixedUpdate() rate, deltaTime given to FixedUpdate() methods of actors and levels
 will be capped at FluctuationTolerancy times deltaTime.
-- FluctuationTolerancy
+- FluctuationTolerancy:
 Used to determine maximum fluctuation in FixedUpdate() rate deltaTime.
 Since time between each call to FixedUpdate() is fixedUpdateDeltaTime = 1/FixedUpdateRate
 When computer cant keep up with FixedUpdate() call rate, the time that passed since last call increases which may cause
@@ -189,5 +189,5 @@ to a multiplier of desired fixedUpdateDeltaTime. FluctuationTolerancy is exactly
 always the same regardless of call rate which can slow down the game but prevent any physics bugs. Setting it to 0.5 will make the maximum
 deltaTime given to 150% of fixedUpdateDeltaTime so in case of computer lag game still runs at constant speed but calculates with less accuracy.
 
-- IsOn
+- IsOn:
 Gee... I wonder what it does...?
