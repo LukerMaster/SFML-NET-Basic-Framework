@@ -1,4 +1,4 @@
-#SFML-Basic-Framework
+# SFML-Basic-Framework
 In its core is a simple library that creates a system of **Levels** that each of them contains its own set of **Actors** (any kind of object).
 
 ### Problem
