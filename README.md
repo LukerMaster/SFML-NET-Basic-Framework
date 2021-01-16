@@ -158,7 +158,7 @@ class MyAssetManager : SFBF.AssetManager
     {
         public void UnloadAllAssets()
         {
-            // Does not to do anything
+            // Does not need to do anything
             // in particular. But SHOULD unload
             // all assets.
         }
