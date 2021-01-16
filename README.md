@@ -1,7 +1,7 @@
 #SFML-Basic-Framework
 In its core is a simple library that creates a system of **Levels** that each of them contains its own set of **Actors** (any kind of object).
 
-###Problem
+### Problem
 Lets say you want to create SFML.NET game or simulation that requires game-loop and that contains a set of objects that need to know about each other (for example enemies that need to detect the player.)
 This library lets you create one object that handles all the timings, window, viewports, views and everything with simple adjustable settings.
 ###How to
@@ -99,7 +99,7 @@ class SomeMyLevel : SFBF.Level
 Now that we instantiated a new actor we can see it being drawn onto the screen every frame.
 
 That is enough to make basic SFBF application.
-###Important list of things
+### Important list of things
 - The same way you add Actors/Levels using `InstantiateActor()`/`InstantiateLevel()` you can delete them from the list using `DestroyActor()`/`DestroyLevel()`. Keep in mind that **nothing** is deleted from the **memory**. You can keep a reference to these objects keeping them alive but they wont be updated nor drawn since they are not in the list.
 
 - You can override protected `bool ToDestroy` property of each **Actor** and **Level** to automatically delete them from the list. Once this property returns `true` Actor/Level is removed from the list.
@@ -114,7 +114,7 @@ That is enough to make basic SFBF application.
 
 - `SFBE.Engine.Data` is a property that gives us access to settings of the `SFBF.Engine`. There are a few of them and you should try to play with them yourself
 
-###Communication between objects
+### Communication between objects
 - Instantiated levels are inside a list stored inside Instance.
 - Instantiated actors are inside a list stored inside a Level.
 
@@ -145,7 +145,7 @@ protected override void FixedUpdate(float dt, Level level)
 }
 ```
 
-###AssetManager...?
+### AssetManager...?
 AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know (**OR ALL SHOULD**), things like textures or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
 
 It forces you to add `UnloadAllAssets()` method that should unload everything but you can... *sigh...* leave it empty. This object will now be accessible inside every actors `Draw()` method.
@@ -171,7 +171,7 @@ protected override void Draw(RenderWindow w, AssetManager assetMgr)
 	(assetMgr as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
 }
 ```
-###Data.Settings overview
+### Data.Settings overview
 - UpdateRate:
 Used to determine maximum rate at which Update() and Draw() methods are called. Can be set to 0 to remove the cap.
 Setting negative value will ignore minus.
