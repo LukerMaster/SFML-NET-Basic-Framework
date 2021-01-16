@@ -126,10 +126,12 @@ For example calling `inst.DestroyLevel(this)` will remove the current level from
 But how to get access to other levels that are currently in the list **from the level**?
 Simple: `inst.GetLevelsOfClass<T>()` returns a `List<T>` that contains all the levels that are of class `T`. Now you can save reference to them and do anything you want with them.
 ```csharp
-// Inside (Fixed)UpdateScript()
-List<OtherWeirdLevel> list = inst.GetLevelsOfClass<OtherWeirdLevel>();
-list[0].SomePublicMemberInt = 30;
+protected override void UpdateScript(float dt, Instance inst)
+{
+	List<OtherWeirdLevel> list = inst.GetLevelsOfClass<OtherWeirdLevel>();
+	list[0].SomePublicMemberInt = 30;
 // I just modified another level from current one
+}
 ```
 Okay, so now we know how to make levels communicate with each other.
 
@@ -144,6 +146,8 @@ protected override void FixedUpdate(float dt, Level level)
 	list[0].DrawOrder = -10;
 }
 ```
+
+Worth mentioning that GetXOfClass<>() is quite heavy and should not be called each frame. Rather conditionally.
 
 ### AssetManager...?
 AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know (**OR ALL SHOULD**), things like textures or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
