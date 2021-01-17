@@ -100,7 +100,7 @@ Now that we instantiated a new actor we can see it being drawn onto the screen e
 
 That is enough to make basic SFBF application.
 ### Important list of things
-- The same way you add Actors/Levels using `InstantiateActor()`/`InstantiateLevel()` you can delete them from the list using `DestroyActor()`/`DestroyLevel()`. Keep in mind that **nothing** is deleted from the **memory**. You can keep a reference to these objects keeping them alive but they wont be updated nor drawn since they are not in the list.
+- The same way you add Actors/Levels using `InstantiateActor()`/`InstantiateLevel()` you can delete them from the list using `DestroyActor()`/`DestroyLevel()`. Keep in mind that **nothing** is forcefully deleted from the **memory** (Standard C# GC rules apply here) i.e. You can keep a reference to these objects keeping them alive but they wont be updated nor drawn since they are not in the list.
 
 - You can override protected `bool ToDestroy` property of each **Actor** and **Level** to automatically delete them from the list. Once this property returns `true` Actor/Level is removed from the list.
 
