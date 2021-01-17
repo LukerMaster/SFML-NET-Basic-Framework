@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SFBE
+namespace SFBF
 {
     /// <summary>
     /// User-interface class to instantiate entire game engine.

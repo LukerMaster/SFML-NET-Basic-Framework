@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 
-namespace SFBE
+namespace SFBF
 {
     public abstract class Actor
     {
@@ -12,19 +12,21 @@ namespace SFBE
         /// </summary>
         /// <param name="dt">deltaTime from previous frame</param>
         /// <param name="level">Level data used to communicate with other actors</param>
-        protected abstract void Update(float dt, Level level);
+        /// <param name="assets">AssetManager interface - Here used to get external data for calculations.</param>
+        protected abstract void Update(float dt, Level level, AssetManager assets = null);
         /// <summary>
         /// Function called every fixed amount of time. Should be used for physics/collision calculations.
         /// </summary>
         /// <param name="dt">deltaTime from previous fixedUpdate() call. Should not vary much unless FluctuationTolerance is high.</param>
         /// <param name="level">Level data used to communicate with other actors</param>
-        protected abstract void FixedUpdate(float dt, Level level);
+        /// <param name="assets">AssetManager interface - Here used to get external data for calculations.</param>
+        protected abstract void FixedUpdate(float dt, Level level, AssetManager assets = null);
         /// <summary>
         /// Function called every frame. Should be used to draw stuff on the screen and play sounds/music.
         /// </summary>
         /// <param name="w">Window to draw in.</param>
-        /// <param name="assets">AssetManager interface used to get textures and sound buffers.</param>
-        protected abstract void Draw(RenderWindow w, AssetManager assets);
+        /// <param name="assets">AssetManager interface - Here used to get textures and sound buffers.</param>
+        protected abstract void Draw(RenderWindow w, Level level = null, AssetManager assets = null);
         /// <summary>
         /// This variable is checked every frame (both after Update and FixedUpdate) and if is True, this
         /// instance is deleted from the world.
@@ -46,9 +48,9 @@ namespace SFBE
             {
                 actor = ac;
             }
-            public void Update(float dt, Level level) => actor.Update(dt, level);
-            public void FixedUpdate(float dt, Level level) => actor.FixedUpdate(dt, level);
-            public void Draw(RenderWindow w, AssetManager assetMgr) => actor.Draw(w, assetMgr);
+            public void Update(float dt, Level level, AssetManager assetMgr) => actor.Update(dt, level, assetMgr);
+            public void FixedUpdate(float dt, Level level, AssetManager assetMgr) => actor.FixedUpdate(dt, level, assetMgr);
+            public void Draw(RenderWindow w, Level level, AssetManager assetMgr) => actor.Draw(w, level, assetMgr);
         }
     }
 }

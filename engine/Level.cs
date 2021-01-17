@@ -3,9 +3,9 @@ using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using static SFBE.Actor;
+using static SFBF.Actor;
 
-namespace SFBE
+namespace SFBF
 {
     abstract public class Level
     {
@@ -99,7 +99,7 @@ namespace SFBE
                 level.UpdateScript(dt, inst);
                 for (int i = 0; i < level.actorCtrls.Count; i++)
                 {
-                    level.actorCtrls[i].Update(dt, level);
+                    level.actorCtrls[i].Update(dt, level, inst.assets);
                     if (level.actorCtrls[i].actor.ToDestroy)
                         level.actorCtrls.RemoveAt(i);
                 }
@@ -110,7 +110,7 @@ namespace SFBE
                 level.FixedUpdateScript(dt, inst);
                 for (int i = 0; i < level.actorCtrls.Count; i++)
                 {
-                    level.actorCtrls[i].FixedUpdate(dt, level);
+                    level.actorCtrls[i].FixedUpdate(dt, level, inst.assets);
                     if (level.actorCtrls[i].actor.ToDestroy)
                         level.actorCtrls.RemoveAt(i);
                 }
@@ -129,7 +129,7 @@ namespace SFBE
                         else return 0;
                     });
                 foreach (ActorController a in drawables)
-                        a.Draw(window, assets);
+                        a.Draw(window, level, assets);
             }
         }
     }

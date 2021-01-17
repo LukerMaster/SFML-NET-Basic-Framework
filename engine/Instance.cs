@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using static SFBE.Level;
+using static SFBF.Level;
 
-namespace SFBE
+namespace SFBF
 {
     public class Instance
     {
-        public bool IsGameOn = true;
+        public bool IsOn = true;
 
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace SFBE
         /// </summary>
         /// <param name="LevelType">Class to check</param>
         /// <returns>List of level references</returns>
-        public List<LevelType> GetScenesOfClass<LevelType>() where LevelType : Level
+        public List<LevelType> GetLevelsOfClass<LevelType>() where LevelType : Level
         {
             List<LevelType> list = new List<LevelType>();
             foreach (LevelController scene in levelCtrls)
@@ -161,7 +161,7 @@ namespace SFBE
                 Clock fixedUpdateClock = new Clock();
                 updateClock.Restart();
                 fixedUpdateClock.Restart();
-                while (Data.IsGameOn && Data.levelCtrls.Count > 0)
+                while (Data.IsOn && Data.levelCtrls.Count > 0)
                 {
                     elapsed_dt = updateClock.ElapsedTime.AsSeconds();
                     if (elapsed_dt > Data.desired_dt)
@@ -184,8 +184,10 @@ namespace SFBE
                         fixedUpdateClock.Restart();
                     }
                 }
-                Data.window.Close();
-                Data.window.Dispose();
+
+                Data.window?.Close();
+                Data.window?.Dispose();
+                
             }
 
             private void ManagePendingLevels()
@@ -235,11 +237,9 @@ namespace SFBE
             {
                 if (Data.window == null || (Data.wasWindowFullScreen != ctrl.level.Settings.Fullscreen) || (Data.wasWindowFullScreen && ctrl.level.Settings.Resolution != Data.window.Size))
                 {
-                    if (Data.window != null)
-                    {
-                        Data.window.Close();
-                        Data.window.Dispose();
-                    }
+
+                    Data.window?.Close();
+                    Data.window?.Dispose();
                         
                     Data.window = new RenderWindow(new VideoMode((uint)ctrl.level.Settings.Resolution.X, (uint)ctrl.level.Settings.Resolution.Y), ctrl.level.WindowName,
                     (ctrl.level.Settings.Resizable ? Styles.Resize : 0) |
