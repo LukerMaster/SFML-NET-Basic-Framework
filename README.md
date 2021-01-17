@@ -38,7 +38,7 @@ Now you have access to two methods in which you can script whatever you want Thi
 ```csharp
 engine.Data.InstantiateLevel(new SomeMyLevel());
 ```
-*(Data parameter explained later.)*
+*(`Data` property explained later.)*
 
 `InstantiateLevel()` is a method that adds a level to the current level list. You can add multiple levels and each of them is going to be updated but only **one** drawn at a time. (Explained later.)
 
