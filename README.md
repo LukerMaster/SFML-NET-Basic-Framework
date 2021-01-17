@@ -50,7 +50,7 @@ But now the window is just black, nothing is going on. There is where **Actors**
 ```csharp
 class MyActor : Actor
     {
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
 		// Called every frame. Used to draw stuff.
 		// Look, it gets SFML.RenderWindow as argument so you can actually draw stuff.
@@ -150,7 +150,7 @@ protected override void FixedUpdate(float dt, Level level, AssetManager assets)
 Worth mentioning that GetXOfClass<>() is quite heavy and should not be called each frame. Rather conditionally.
 
 ### AssetManager...?
-AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know (**OR ALL SHOULD**), things like textures or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
+AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know (**OR ALL SHOULD**), things like textures, save data or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
 
 It forces you to add `UnloadAllAssets()` method that should unload everything but you can... *sigh...* leave it empty. This object will now be accessible inside every actors `Draw()` method.
 ```csharp
@@ -162,17 +162,21 @@ class MyAssetManager : SFBF.AssetManager
             // in particular. But SHOULD unload
             // all assets.
         }
+	public SomeAsset MyFunctionToLoadSomeAsset(string path) // User defined function.
+	{
+		// Loady load.
+	}
     }
 ```
 then:
 ```csharp
 engine.Data.assets = new MyAssetManager();
 ```
-and then you can do this:
+and then you can do this inside an actor:
 ```csharp
-protected override void Draw(RenderWindow w, AssetManager assets)
+protected override void Draw(RenderWindow w, Level level, AssetManager assets)
 {
-	(assets as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
+	SomethingThatNeedsSomeAsset.SomeAsset = (assets as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
 }
 ```
 ### Data.Settings overview
@@ -194,4 +198,4 @@ always the same regardless of call rate which can slow down the game but prevent
 deltaTime given to 150% of fixedUpdateDeltaTime so in case of computer lag game still runs at constant speed but calculates with less accuracy.
 
 - IsOn:
-Gee... I wonder what it does...?
+~~Gee... I wonder what it does...?~~ Turns off the engine if false. Effectively unlocking `Run()` method.
