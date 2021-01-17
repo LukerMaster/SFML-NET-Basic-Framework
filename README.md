@@ -50,7 +50,7 @@ But now the window is just black, nothing is going on. There is where **Actors**
 ```csharp
 class MyActor : Actor
     {
-        protected override void Draw(RenderWindow w, AssetManager assetMgr)
+        protected override void Draw(RenderWindow w, AssetManager assets)
         {
 		// Called every frame. Used to draw stuff.
 		// Look, it gets SFML.RenderWindow as argument so you can actually draw stuff.
@@ -63,12 +63,12 @@ class MyActor : Actor
 			w.Draw(s);
         }
 
-        protected override void FixedUpdate(float dt, Level level)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
         {
 		// Called every fixed amount of time.
         }
 
-        protected override void Update(float dt, Level level)
+        protected override void Update(float dt, Level level, AssetManager assets)
         {
 		// Called every frame.
         }
@@ -140,7 +140,7 @@ Noticed `Level` parameter inside `Update()` and `FixedUpdate()` methods?
 The same way we can call `level.GetActorsOfClass<T>()` and get a full list of other actors that we can manipulate freely.
 
 ```csharp
-protected override void FixedUpdate(float dt, Level level)
+protected override void FixedUpdate(float dt, Level level, AssetManager assets)
 {
 	List<SomeTestActor> list = level.GetActorsOfClass<SomeTestActor>();
 	list[0].DrawOrder = -10;
@@ -170,9 +170,9 @@ engine.Data.assets = new MyAssetManager();
 ```
 and then you can do this:
 ```csharp
-protected override void Draw(RenderWindow w, AssetManager assetMgr)
+protected override void Draw(RenderWindow w, AssetManager assets)
 {
-	(assetMgr as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
+	(assets as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
 }
 ```
 ### Data.Settings overview
