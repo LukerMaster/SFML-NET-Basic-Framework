@@ -50,17 +50,17 @@ But now the window is just black, nothing is going on. There is where **Actors**
 ```csharp
 class MyActor : Actor
     {
-        protected override void Draw(RenderWindow w, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
         {
 		// Called every frame. Used to draw stuff.
 		// Look, it gets SFML.RenderWindow as argument so you can actually draw stuff.
 
 		// Test code to see if it draws stuff correctly
-			RectangleShape s = new RectangleShape();
-            s.Size = new Vector2f(100, 200);
-            s.FillColor = new Color(255, 255, 0, 255);
-            s.Position = new Vector2f(100, 100);
-			w.Draw(s);
+		RectangleShape s = new RectangleShape();
+            	s.Size = new Vector2f(100, 200);
+           	s.FillColor = new Color(255, 255, 0, 255);
+            	s.Position = new Vector2f(100, 100);
+		w.Draw(s);
         }
 
         protected override void FixedUpdate(float dt, Level level, AssetManager assets)
@@ -100,7 +100,7 @@ Now that we instantiated a new actor we can see it being drawn onto the screen e
 
 That is enough to make basic SFBF application.
 ### Important list of things
-- The same way you add Actors/Levels using `InstantiateActor()`/`InstantiateLevel()` you can delete them from the list using `DestroyActor()`/`DestroyLevel()`. Keep in mind that **nothing** is deleted from the **memory**. You can keep a reference to these objects keeping them alive but they wont be updated nor drawn since they are not in the list.
+- The same way you add Actors/Levels using `InstantiateActor()`/`InstantiateLevel()` you can delete them from the list using `DestroyActor()`/`DestroyLevel()`. Keep in mind that **nothing** is forcefully deleted from the **memory** (Standard C# GC rules apply here) i.e. You can keep a reference to these objects keeping them alive but they wont be updated nor drawn since they are not in the list.
 
 - You can override protected `bool ToDestroy` property of each **Actor** and **Level** to automatically delete them from the list. Once this property returns `true` Actor/Level is removed from the list.
 
@@ -150,29 +150,26 @@ protected override void FixedUpdate(float dt, Level level, AssetManager assets)
 Worth mentioning that GetXOfClass<>() is quite heavy and should not be called each frame. Rather conditionally.
 
 ### AssetManager...?
-AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know (**OR ALL SHOULD**), things like textures or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
+AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know, things like textures, save data or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
 
-It forces you to add `UnloadAllAssets()` method that should unload everything but you can... *sigh...* leave it empty. This object will now be accessible inside every actors `Draw()` method.
 ```csharp
 class MyAssetManager : SFBF.AssetManager
     {
-        public void UnloadAllAssets()
-        {
-            // Does not need to do anything
-            // in particular. But SHOULD unload
-            // all assets.
-        }
+	public SomeAsset MyFunctionToLoadSomeAsset(string path) // User defined function.
+	{
+		// Loady load.
+	}
     }
 ```
 then:
 ```csharp
 engine.Data.assets = new MyAssetManager();
 ```
-and then you can do this:
+and then you can do this inside an actor:
 ```csharp
-protected override void Draw(RenderWindow w, AssetManager assets)
+protected override void Draw(RenderWindow w, Level level, AssetManager assets)
 {
-	(assets as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
+	SomethingThatNeedsSomeAsset.SomeAsset = (assets as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
 }
 ```
 ### Data.Settings overview
@@ -194,4 +191,4 @@ always the same regardless of call rate which can slow down the game but prevent
 deltaTime given to 150% of fixedUpdateDeltaTime so in case of computer lag game still runs at constant speed but calculates with less accuracy.
 
 - IsOn:
-Gee... I wonder what it does...?
+~~Gee... I wonder what it does...?~~ Turns off the engine if false. Effectively unlocking `Run()` method.
