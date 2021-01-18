@@ -152,16 +152,9 @@ Worth mentioning that GetXOfClass<>() is quite heavy and should not be called ea
 ### AssetManager...?
 AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know, things like textures, save data or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
 
-It forces you to add `UnloadAllAssets()` method that should unload everything but you can... *sigh...* leave it empty. This object will now be accessible inside every actors `Draw()` method.
 ```csharp
 class MyAssetManager : SFBF.AssetManager
     {
-        public void UnloadAllAssets()
-        {
-            // Does not need to do anything
-            // in particular. But SHOULD unload
-            // all assets.
-        }
 	public SomeAsset MyFunctionToLoadSomeAsset(string path) // User defined function.
 	{
 		// Loady load.
