@@ -56,11 +56,11 @@ class MyActor : Actor
 		// Look, it gets SFML.RenderWindow as argument so you can actually draw stuff.
 
 		// Test code to see if it draws stuff correctly
-			RectangleShape s = new RectangleShape();
-            s.Size = new Vector2f(100, 200);
-            s.FillColor = new Color(255, 255, 0, 255);
-            s.Position = new Vector2f(100, 100);
-			w.Draw(s);
+		RectangleShape s = new RectangleShape();
+            	s.Size = new Vector2f(100, 200);
+           	s.FillColor = new Color(255, 255, 0, 255);
+            	s.Position = new Vector2f(100, 100);
+		w.Draw(s);
         }
 
         protected override void FixedUpdate(float dt, Level level, AssetManager assets)
