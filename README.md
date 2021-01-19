@@ -104,7 +104,7 @@ That is enough to make basic SFBF application.
 
 - You can override protected `bool ToDestroy` property of each **Actor** and **Level** to automatically delete them from the list. Once this property returns `true` Actor/Level is removed from the list.
 
-- You can override protected `int DrawOrder` property of each **Actor** to make it be drawn on top or bottom.
+- You can use `int DrawOrder` property of each **Actor** to make it be drawn on top or bottom.
 
 - Each Level has access to `SFBE.WindowSettings` member which you can use to change window settings for each level.
 
