@@ -9,6 +9,10 @@ namespace SFBF
     public class WindowSettings
     {
         /// <summary>
+        /// Text displayed on the window titlebar.
+        /// </summary>
+        public string WindowName = "SFML Basic Engine";
+        /// <summary>
         /// Defines the size of currently displayed part of the world.
         /// </summary>
         public Vector2u ViewSize { get; set; } = new Vector2u(640, 480);

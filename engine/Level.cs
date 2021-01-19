@@ -20,10 +20,7 @@ namespace SFBF
 
         private Vector2f mousePos;
         public Vector2f MousePos { get => mousePos; private set => mousePos = value; }
-        /// <summary>
-        /// Text displayed on the window titlebar.
-        /// </summary>
-        public string WindowName = "SFML Basic Engine";
+        
 
         /// <summary>
         /// Update script for a level. Can be used to properly give input, check win conditions etc.

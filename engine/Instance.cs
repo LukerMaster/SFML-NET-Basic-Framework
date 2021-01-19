@@ -241,7 +241,7 @@ namespace SFBF
                     Data.window?.Close();
                     Data.window?.Dispose();
                         
-                    Data.window = new RenderWindow(new VideoMode((uint)ctrl.level.Settings.Resolution.X, (uint)ctrl.level.Settings.Resolution.Y), ctrl.level.WindowName,
+                    Data.window = new RenderWindow(new VideoMode((uint)ctrl.level.Settings.Resolution.X, (uint)ctrl.level.Settings.Resolution.Y), ctrl.level.Settings.WindowName,
                     (ctrl.level.Settings.Resizable ? Styles.Resize : 0) |
                     (ctrl.level.Settings.Fullscreen ? Styles.Fullscreen : 0) |
                     Styles.Close |
@@ -250,7 +250,7 @@ namespace SFBF
                     Data.wasWindowFullScreen = ctrl.level.Settings.Fullscreen;
                 }
                 Data.window.Size = new Vector2u((uint)ctrl.level.Settings.Resolution.X, (uint)ctrl.level.Settings.Resolution.Y);
-                Data.window.SetTitle(ctrl.level.WindowName);
+                Data.window.SetTitle(ctrl.level.Settings.WindowName);
 
                 // Setting the correct viewport and view.
                 View view = new View();
