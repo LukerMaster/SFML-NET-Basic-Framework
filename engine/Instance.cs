@@ -246,6 +246,8 @@ namespace SFBF
                     (ctrl.level.Settings.Fullscreen ? Styles.Fullscreen : 0) |
                     Styles.Close |
                     Styles.Titlebar);
+                    if (ctrl.level.Settings.WindowIcon != null)
+                        Data.window.SetIcon(ctrl.level.Settings.WindowIcon.Size.X, ctrl.level.Settings.WindowIcon.Size.Y, ctrl.level.Settings.WindowIcon.Pixels);
 
                     Data.wasWindowFullScreen = ctrl.level.Settings.Fullscreen;
                 }

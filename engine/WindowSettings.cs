@@ -1,4 +1,5 @@
-﻿using SFML.System;
+﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -43,5 +44,10 @@ namespace SFBF
             get => resolution;
             set => resolution = new Vector2u(Math.Max(1, value.X), Math.Max(1, value.Y)); 
         }
+        /// <summary>
+        /// Icon of the window
+        /// </summary>
+        public Image WindowIcon;
+
     }
 }
