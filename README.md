@@ -1,3 +1,5 @@
+## This project is in very experimental pre-alpha stage so expect some backward-incompatible changes coming out for some time.
+
 # SFML-Basic-Framework
 In its core is a simple library that creates a system of **Levels** that each of them contains its own set of **Actors** (any kind of object).
 
@@ -50,7 +52,7 @@ But now the window is just black, nothing is going on. There is where **Actors**
 ```csharp
 class MyActor : Actor
     {
-        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assetMgr)
         {
 		// Called every frame. Used to draw stuff.
 		// Look, it gets SFML.RenderWindow as argument so you can actually draw stuff.
@@ -63,12 +65,12 @@ class MyActor : Actor
 		w.Draw(s);
         }
 
-        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assetMgr)
         {
 		// Called every fixed amount of time.
         }
 
-        protected override void Update(float dt, Level level, AssetManager assets)
+        protected override void Update(float dt, Level level, AssetManager assetMgr)
         {
 		// Called every frame.
         }
@@ -140,7 +142,7 @@ Noticed `Level` parameter inside `Update()` and `FixedUpdate()` methods?
 The same way we can call `level.GetActorsOfClass<T>()` and get a full list of other actors that we can manipulate freely.
 
 ```csharp
-protected override void FixedUpdate(float dt, Level level, AssetManager assets)
+protected override void FixedUpdate(float dt, Level level, AssetManager assetMgr)
 {
 	List<SomeTestActor> list = level.GetActorsOfClass<SomeTestActor>();
 	list[0].DrawOrder = -10;
@@ -150,10 +152,10 @@ protected override void FixedUpdate(float dt, Level level, AssetManager assets)
 Worth mentioning that GetXOfClass<>() is quite heavy and should not be called each frame. Rather conditionally.
 
 ### AssetManager...?
-AssetManager is interface reference that is created inside the instance (So only one per `SFBE.Engine`). But by default, references `null`. As we all know, things like textures, save data or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this reference to create your own AssetManager class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetManager` and add it into Engine.
+AssetManager is a readonly sealed class that is kept inside every instance of the game (So only one per `SFBE.Engine`). It stores an object of abstract class `AssetBox` that by default is `null`. As we all know, things like textures, save data or sound buffers should be always loaded **ONCE**. You NEVER need two same textures loaded to create sprites. So you *may* use this system to create your own implementation of `AssetBox` class responsible for loading textures, sounds etc. All you have to do is create a class that derives from `SFBF.AssetBox` and add it into Engine.
 
 ```csharp
-class MyAssetManager : SFBF.AssetManager
+class MyAssetBox : SFBF.AssetBox
     {
 	public SomeAsset MyFunctionToLoadSomeAsset(string path) // User defined function.
 	{
@@ -161,15 +163,18 @@ class MyAssetManager : SFBF.AssetManager
 	}
     }
 ```
-then:
+then you need to tell the engine, what type of AssetBox should it store inside:
 ```csharp
-engine.Data.assets = new MyAssetManager();
+engine.SetAssetBoxType(typeof(MyAssetBox));
 ```
-and then you can do this inside an actor:
+After calling this, your engine instance will create an object of `MyAssetBox` and will keep it inside AssetManager.
+Then you can do this inside an actor:
 ```csharp
-protected override void Draw(RenderWindow w, Level level, AssetManager assets)
+protected override void Draw(RenderWindow w, Level level, AssetManager assetMgr)
 {
-	SomethingThatNeedsSomeAsset.SomeAsset = (assets as MyAssetManager).MyFunctionToLoadSomeAsset(pathToAssetString);
+	SomethingThatNeedsSomeAsset.SomeAsset = (assetMgr.Assets as MyAssetBox).MyFunctionToLoadSomeAsset(pathToAssetString); // Asset now available here.
+	if (TOO_MUCH_MEMORY_ALLOCATED_BY_ASSETS_AAAAAAAAAAAA)
+		assetMgr.UnloadAll(); // Built in AssetManager class. Creates new instance of MyAssetBox inside of AssetMgr.
 }
 ```
 ### Data.Settings overview
