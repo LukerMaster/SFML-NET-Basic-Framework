@@ -1,3 +1,5 @@
+## This project is in very experimental pre-alpha stage so expect some backward-incompatible changes coming out for some time.
+
 # SFML-Basic-Framework
 In its core is a simple library that creates a system of **Levels** that each of them contains its own set of **Actors** (any kind of object).
 
