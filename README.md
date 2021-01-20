@@ -50,7 +50,7 @@ But now the window is just black, nothing is going on. There is where **Actors**
 ```csharp
 class MyActor : Actor
     {
-        protected override void Draw(RenderWindow w, Level level, AssetManager assets)
+        protected override void Draw(RenderWindow w, Level level, AssetManager assetMgr)
         {
 		// Called every frame. Used to draw stuff.
 		// Look, it gets SFML.RenderWindow as argument so you can actually draw stuff.
@@ -63,12 +63,12 @@ class MyActor : Actor
 		w.Draw(s);
         }
 
-        protected override void FixedUpdate(float dt, Level level, AssetManager assets)
+        protected override void FixedUpdate(float dt, Level level, AssetManager assetMgr)
         {
 		// Called every fixed amount of time.
         }
 
-        protected override void Update(float dt, Level level, AssetManager assets)
+        protected override void Update(float dt, Level level, AssetManager assetMgr)
         {
 		// Called every frame.
         }
@@ -140,7 +140,7 @@ Noticed `Level` parameter inside `Update()` and `FixedUpdate()` methods?
 The same way we can call `level.GetActorsOfClass<T>()` and get a full list of other actors that we can manipulate freely.
 
 ```csharp
-protected override void FixedUpdate(float dt, Level level, AssetManager assets)
+protected override void FixedUpdate(float dt, Level level, AssetManager assetMgr)
 {
 	List<SomeTestActor> list = level.GetActorsOfClass<SomeTestActor>();
 	list[0].DrawOrder = -10;
