@@ -24,6 +24,10 @@ namespace SFBF
         {
             instance.Loop();
         }
+        public void SetAssetBoxType(Type type)
+        {
+            instance.Data.assets.SetAssetBoxType(type);
+        }
         public Engine()
         {
 

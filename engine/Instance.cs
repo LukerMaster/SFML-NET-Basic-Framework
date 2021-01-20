@@ -14,9 +14,11 @@ namespace SFBF
 
         /// <summary>
         /// Interface that allows to open textures, sounds etc.
-        /// Should be user-implemented since it is dependent on the program.
+        /// Keeps AssetBox interface that should be overriden by the user.
         /// </summary>
-        public AssetManager assets;
+        public AssetManager AssetMgr { get => assets.assetMgr; }
+
+        internal readonly AssetManager.AssetManagerController assets = new AssetManager.AssetManagerController();
 
         // Window-related code -----------------
         private RenderWindow window;
@@ -226,7 +228,7 @@ namespace SFBF
             {
 
                 if (Data.levelCtrls.Count > 0)
-                    Data.levelCtrls[0].Draw(Data.window, Data.assets);
+                    Data.levelCtrls[0].Draw(Data.window, Data.assets.assetMgr);
                     
             }
             /// <summary>

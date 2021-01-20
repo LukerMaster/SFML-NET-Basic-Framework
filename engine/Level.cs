@@ -96,7 +96,7 @@ namespace SFBF
                 level.UpdateScript(dt, inst);
                 for (int i = 0; i < level.actorCtrls.Count; i++)
                 {
-                    level.actorCtrls[i].Update(dt, level, inst.assets);
+                    level.actorCtrls[i].Update(dt, level, inst.assets.assetMgr);
                     if (level.actorCtrls[i].actor.ToDestroy)
                         level.actorCtrls.RemoveAt(i);
                 }
@@ -107,7 +107,7 @@ namespace SFBF
                 level.FixedUpdateScript(dt, inst);
                 for (int i = 0; i < level.actorCtrls.Count; i++)
                 {
-                    level.actorCtrls[i].FixedUpdate(dt, level, inst.assets);
+                    level.actorCtrls[i].FixedUpdate(dt, level, inst.assets.assetMgr);
                     if (level.actorCtrls[i].actor.ToDestroy)
                         level.actorCtrls.RemoveAt(i);
                 }
